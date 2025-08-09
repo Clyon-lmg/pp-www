@@ -1,93 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Peptide Planner — Plan, Track, and Optimize</title>
-  <meta name="description" content="Track peptides, manage inventory, schedule dosing, and export calendars with Peptide Planner.">
-  <link rel="icon" href="images/favicon.ico">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="container">
-    <header class="header">
-      <div class="brand">
-        <img src="images/logo.png" alt="Peptide Planner" class="logo">
-        <span>Peptide Planner</span>
-      </div>
-      <nav>
-        <a href="#features">Features</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#faq">FAQ</a>
-        <a href="https://app.peptideplanner.info/auth?mode=signin">Sign in</a>
-      </nav>
-    </header>
-
-    <section class="hero">
-      <div>
-        <h1>Plan, Track, and Optimize</h1>
-        <p>Peptide Planner brings clarity to research workflows. Manage vial counts, dose volume, schedules, and cycles — with automatic reorder suggestions and calendar export.</p>
-        <p><a class="btn btn-primary" href="https://app.peptideplanner.info/auth?mode=signup">Start Free</a></p>
-      </div>
-      <div class="card">
-        <h3>What you can do</h3>
-        <ul>
-          <li>Log doses or skips with one click</li>
-          <li>Show only active, on‑cycle peptides</li>
-          <li>Auto-calc concentration and dose volume</li>
-          <li>Predict reorder dates using lead time</li>
-          <li>Export .ics with 30‑minute reminders</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="features" class="section">
-      <h2>Features</h2>
-      <div class="grid-3">
-        <div class="card">
-          <h3>Smart Inventory</h3>
-          <p>Track mg per vial, BAC, units, remaining doses, and reorder timing.</p>
-        </div>
-        <div class="card">
-          <h3>Flexible Scheduling</h3>
-          <p>Choose common patterns or fully custom weekly schedules and cycles.</p>
-        </div>
-        <div class="card">
-          <h3>Calendar Export</h3>
-          <p>Export your plan to .ics and add to Google/Apple/Outlook calendars.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="pricing" class="section">
-      <h2>Pricing</h2>
-      <div class="card">
-        <h3>Free (Beta)</h3>
-        <p>Full access during beta while we polish and expand features.</p>
-      </div>
-    </section>
-
-    <section id="faq" class="section">
-      <h2>FAQ</h2>
-      <div class="grid-3">
-        <div class="card">
-          <h3>Is this medical software?</h3>
-          <p>No. Peptide Planner is a research tracking tool and does not provide medical advice.</p>
-        </div>
-        <div class="card">
-          <h3>Do you sell peptides?</h3>
-          <p>No. We plan to display pricing links from reputable vendors (affiliate at no cost to you).</p>
-        </div>
-        <div class="card">
-          <h3>Mobile?</h3>
-          <p>The web app is mobile-friendly now. Native apps are on the roadmap.</p>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <div>© 2025 Peptide Planner · <a href="mailto:hello@peptideplanner.info" style="color:#a9bdd6">Contact</a></div>
-    </footer>
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Peptide Planner — Plan, Track, Reorder</title>
+<link rel="icon" href="/favicon.ico" />
+<link rel="stylesheet" href="/styles.css" />
+</head><body>
+<header class="hero">
+  <div class="wrap">
+    <div class="branding"><span class="logo">PP</span> <strong>Peptide Planner</strong></div>
+    <nav><a href="#features">Features</a> <a href="#privacy">Privacy</a> <a href="https://app.peptideplanner.info/auth?mode=signup" class="cta">Create Account</a></nav>
   </div>
-</body>
-</html>
+</header>
+<main class="wrap">
+  <section class="intro">
+    <h1>Plan injections. Track doses. Know when to reorder.</h1>
+    <p>Peptide Planner helps you run clean cycles with flexible schedules (weekdays, custom days, or every <em>N</em> days), log each dose, and see your next reorder date automatically. Inventory ties to your schedule, so you never run out mid‑cycle.</p>
+    <p><a class="cta" href="https://app.peptideplanner.info/auth?mode=signup">Create your free account</a></p>
+  </section>
+  <section id="features" class="cards">
+    <div class="card">
+      <h3>Custom Schedules</h3>
+      <p>Pick specific weekdays, run 5/2 or 3×/week, or set “every N days”. Calendar shows upcoming injections and the home screen only lists today’s items.</p>
+    </div>
+    <div class="card">
+      <h3>Inventory‑Aware Reordering</h3>
+      <p>Enter mg per vial and BAC to compute mg/mL. Peptide Planner counts remaining doses and estimates the reorder date using your supplier’s lead time.</p>
+    </div>
+    <div class="card">
+      <h3>Vendor Peek</h3>
+      <p>During Add, we suggest vendors (when pricing is available), ranked by $/mg and aware of coupons. One click sets default supplier and lead time.</p>
+    </div>
+  </section>
+  <section id="privacy" class="legal">
+    <h2>Privacy</h2>
+    <p>Your protocol data belongs to you. We use minimal analytics to improve the product and never sell personal data. Email is used for login and account notifications.</p>
+    <p>By creating an account, you agree to our <a href="/terms.html">Terms of Service</a> and <a href="/privacy.html">Privacy Policy</a>.</p>
+  </section>
+</main>
+<footer class="footer"><div class="wrap">© Peptide Planner</div></footer>
+</body></html>
