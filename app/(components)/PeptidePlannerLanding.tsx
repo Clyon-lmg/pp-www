@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Calendar, ClipboardList, ShoppingCart, Package, FlaskConical as Flask, Syringe, Wand2, CheckCircle2, XCircle, Clock, ChevronRight, ShieldCheck, Truck, ArrowRight, BarChart3 } from "lucide-react";
+import { Calendar, ClipboardList, ShoppingCart, Package, FlaskConical as Flask, Syringe, Wand2, CheckCircle2, XCircle, Clock, ChevronRight, ShieldCheck, Truck, LogIn, ArrowRight, BarChart3 } from "lucide-react";
 
 export default function PeptidePlannerLanding() {
   const [dark, setDark] = useState(false);
@@ -37,7 +37,31 @@ export default function PeptidePlannerLanding() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[rgb(var(--pp-surface-1))] to-[rgb(var(--pp-surface-2))] text-[rgb(var(--pp-foreground))] dark:text-[rgb(var(--pp-foreground))]">
       {/* Color tokens */}
-      <style>{`/* same styles as before */`}</style>
+      <style>{`
+        :root{
+          --pp-accent-1: 22, 163, 140;
+          --pp-accent-2: 14, 165, 233;
+          --pp-accent-3: 217, 70, 239;
+          --pp-foreground: 17,24,39;
+          --pp-muted: 100,116,139;
+          --pp-border: 226,232,240;
+          --pp-surface-1: 255,255,255;
+          --pp-surface-2: 248,250,252;
+          --pp-card: 255,255,255;
+          --pp-card-contrast: 241,245,249;
+          --pp-ring: 14,165,233;
+        }
+        .dark{
+          --pp-foreground: 241,245,249;
+          --pp-muted: 148,163,184;
+          --pp-border: 51,65,85;
+          --pp-surface-1: 2,6,23;
+          --pp-surface-2: 15,23,42;
+          --pp-card: 2,6,23;
+          --pp-card-contrast: 3,7,18;
+          --pp-ring: 22,163,140;
+        }
+      `}</style>
 
       {/* Header */}
       <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/50 bg-[rgb(var(--pp-surface-1))]/80 dark:bg-[rgb(var(--pp-surface-1))]/40 border-b border-[rgb(var(--pp-border))]">
@@ -104,15 +128,28 @@ export default function PeptidePlannerLanding() {
               </div>
             </div>
 
-            {/* Device mock remains unchanged */}
-            ...
+            {/* Device mock unchanged */}
           </div>
         </div>
       </section>
 
-      {/* Features, Workflow, Providers, FAQ sections remain unchanged */}
+      {/* Features, Workflow, Providers, FAQ unchanged */}
 
-      {/* Removed the CTA section */}
+      {/* CTA */}
+      <section id="cta" className="py-16 lg:py-24">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">Start planning smarter — today</h2>
+          <p className="mt-3 text-[rgb(var(--pp-muted))]">Bring structure to your stack. Keep your color scheme. Keep your vendors. Lose the chaos.</p>
+          <div className="mt-6 flex justify-center gap-3">
+            <a href="https://app.peptideplanner.info" className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-medium text-white bg-gradient-to-r from-[rgb(var(--pp-accent-1))] via-[rgb(var(--pp-accent-2))] to-[rgb(var(--pp-accent-3))] shadow">
+              Launch the App <LogIn className="size-4"/>
+            </a>
+            <a href="#features" className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-medium border border-[rgb(var(--pp-border))]">
+              Explore Features
+            </a>
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="border-t border-[rgb(var(--pp-border))]">
@@ -133,4 +170,31 @@ export default function PeptidePlannerLanding() {
   );
 }
 
-// FeatureCard, Step, Faq components unchanged
+function FeatureCard({icon, title, desc, testId}:{icon:React.ReactNode, title:string, desc:string, testId?: string}){
+  return (
+    <div data-testid={testId} className="rounded-2xl border border-[rgb(var(--pp-border))] bg-[rgb(var(--pp-card))] p-4 hover:shadow-sm transition group">
+      <div className="inline-flex size-9 items-center justify-center rounded-xl bg-[rgba(var(--pp-accent-2),0.12)] text-[rgb(var(--pp-accent-2))] group-hover:scale-105 transition">{icon}</div>
+      <div className="mt-3 font-medium">{title}</div>
+      <p className="mt-1 text-sm text-[rgb(var(--pp-muted))]">{desc}</p>
+    </div>
+  )
+}
+
+function Step({n,title,body}:{n:string,title:string,body:string}){
+  return (
+    <li className="rounded-2xl border border-[rgb(var(--pp-border))] bg-[rgb(var(--pp-card))] p-6">
+      <div className="text-xs font-mono text-[rgb(var(--pp-muted))]">{n}</div>
+      <div className="mt-1 font-medium">{title}</div>
+      <p className="mt-2 text-sm text-[rgb(var(--pp-muted))]">{body}</p>
+    </li>
+  )
+}
+
+function Faq({q,a}:{q:string,a:string}){
+  return (
+    <div className="rounded-2xl border border-[rgb(var(--pp-border))] bg-[rgb(var(--pp-card))] p-5">
+      <div className="font-medium">{q}</div>
+      <p className="mt-2 text-sm text-[rgb(var(--pp-muted))]">{a}</p>
+    </div>
+  )
+}
