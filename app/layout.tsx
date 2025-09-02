@@ -1,5 +1,3 @@
-import { Analytics } from '@vercel/analytics/react';
-
 export const metadata = {
   title: "Peptide Planner",
   description: "Plan • Track • Reorder — peptides companion",
