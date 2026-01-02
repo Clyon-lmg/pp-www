@@ -1,6 +1,21 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Calendar, ClipboardList, ShoppingCart, Package, FlaskConical as Flask, Syringe, Wand2, CheckCircle2, XCircle, Clock, ChevronRight, ShieldCheck, Truck, LogIn, ArrowRight, BarChart3 } from "lucide-react";
+import { 
+  Calendar, 
+  ClipboardList, 
+  Package, 
+  FlaskConical as Flask, 
+  Syringe, 
+  CheckCircle2, 
+  XCircle, 
+  Clock, 
+  ChevronRight, 
+  ShieldCheck, 
+  LogIn, 
+  ArrowRight, 
+  BarChart3, 
+  Activity 
+} from "lucide-react";
 
 export default function PeptidePlannerLanding() {
   const [dark, setDark] = useState(false);
@@ -18,17 +33,14 @@ export default function PeptidePlannerLanding() {
       const banner = document.querySelector('[data-testid="compliance-banner"]');
       console.assert(!!banner && banner.textContent?.toLowerCase().includes("not for human consumption"), "Compliance banner missing or incorrect.");
 
-      const orders = document.querySelector('[data-testid="feature-orders"]');
-      const providers = document.querySelector('[data-testid="feature-providers"]');
-      console.assert(orders?.textContent?.includes("Coming Soon"), "Orders feature should be marked Coming Soon.");
-      console.assert(providers?.textContent?.includes("Coming Soon"), "Provider Suggestions should be marked Coming Soon.");
-
-      console.assert(!document.body.innerHTML.toLowerCase().includes("affiliate"), "Found forbidden word 'affiliate'.");
+      // Verify removed elements are actually gone
+      console.assert(!document.querySelector('[data-testid="feature-orders"]'), "Orders feature should be removed.");
+      console.assert(!document.querySelector('[data-testid="feature-providers"]'), "Provider feature should be removed.");
+      console.assert(!document.querySelector('#providers'), "Provider section should be removed.");
 
       const styles = getComputedStyle(document.documentElement);
       console.assert(styles.getPropertyValue("--pp-accent-1").trim() !== "", "Missing --pp-accent-1 token");
 
-      console.assert(document.body.innerText.includes("Order tracking is a future release"), "FAQ missing tracking status note.");
     } catch (e) {
       console.warn("Smoke tests warning:", e);
     }
@@ -72,14 +84,13 @@ export default function PeptidePlannerLanding() {
             </div>
             <div className="leading-tight">
               <div className="font-semibold tracking-tight text-lg">Peptide Planner</div>
-              <div className="text-xs text-[rgb(var(--pp-muted))] -mt-0.5">Plan • Track • Reorder</div>
+              <div className="text-xs text-[rgb(var(--pp-muted))] -mt-0.5">Plan • Track • Optimize</div>
             </div>
           </a>
 
           <nav className="hidden md:flex items-center gap-6 text-sm">
             <a href="#features" className="hover:opacity-80">Features</a>
             <a href="#workflow" className="hover:opacity-80">How it works</a>
-            <a href="#providers" className="hover:opacity-80">For Providers</a>
             <a href="#faq" className="hover:opacity-80">FAQ</a>
           </nav>
 
@@ -111,7 +122,7 @@ export default function PeptidePlannerLanding() {
                 Your peptide journey, organized.
               </h1>
               <p className="mt-4 text-base md:text-lg text-[rgb(var(--pp-muted))] max-w-prose">
-                Plan doses, track injections, manage inventory, and reorder — all in one companion app. Built for real protocols, cycles, and day-to-day compliance.
+                Plan doses, track history, manage inventory, and monitor your stats — all in one companion app. Built for real protocols, cycles, and day-to-day compliance.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <a href="https://app.peptideplanner.info" className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-medium text-white bg-[rgb(var(--pp-accent-1))] hover:brightness-110 shadow">
@@ -123,7 +134,7 @@ export default function PeptidePlannerLanding() {
               </div>
               <div className="mt-6 flex items-center gap-4 text-xs text-[rgb(var(--pp-muted))]">
                 <div className="inline-flex items-center gap-1"><ShieldCheck className="size-4"/> Private by design</div>
-                <div className="inline-flex items-center gap-1"><Truck className="size-4"/> Discounts auto‑applied</div>
+                <div className="inline-flex items-center gap-1"><Activity className="size-4"/> Progress tracking</div>
                 <div className="inline-flex items-center gap-1"><BarChart3 className="size-4"/> Run‑out forecasting</div>
               </div>
             </div>
@@ -166,18 +177,16 @@ export default function PeptidePlannerLanding() {
       <section id="features" className="py-16 lg:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-semibold tracking-tight">Everything you need to run a real protocol</h2>
-          <p className="mt-3 text-[rgb(var(--pp-muted))] max-w-2xl">Seven focused modules mirror your current app’s feature set — redesigned for speed, clarity, and fewer clicks.</p>
+          <p className="mt-3 text-[rgb(var(--pp-muted))] max-w-2xl">A focused suite of tools designed for speed, clarity, and consistency.</p>
 
           <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <FeatureCard icon={<Syringe className="size-5"/>} title="Today" desc="Tap Log or Skip on dose cards. Auto‑decrement inventory; instant visual state (✓ / ✕)."/>
             <FeatureCard icon={<Calendar className="size-5"/>} title="Calendar" desc="Month grid with Today jump. Past/Today reflect ✓ / ✕ states from the log."/>
-            <FeatureCard icon={<Package className="size-5"/>} title="Inventory" desc="Normalize names, compute concentration, show run‑out date, and surface best vendor prices with coupon logic."/>
+            <FeatureCard icon={<Package className="size-5"/>} title="Inventory" desc="Normalize names, compute concentration, and see run‑out dates for every vial."/>
             <FeatureCard icon={<ClipboardList className="size-5"/>} title="Protocol" desc="Build protocol groups, schedules (ED, 5/2, custom), and cycles. One active at a time."/>
-            <FeatureCard testId="feature-cart" icon={<ShoppingCart className="size-5"/>} title="Cart" desc="Vendor‑grouped carts with coupon/discount prices already applied. Place orders on vendor sites; we keep a draft in your Orders."/>
-            <FeatureCard testId="feature-orders" icon={<Truck className="size-5"/>} title="Order Tracking (Coming Soon)" desc="Save orders, attach tracking numbers, and see ETA via multi‑carrier lookup."/>
-            <FeatureCard testId="feature-providers" icon={<Wand2 className="size-5"/>} title="Provider Suggestions (Coming Soon)" desc="Invite a provider to propose protocol edits and inventory adds — you approve what goes live."/>
-            <FeatureCard icon={<ShieldCheck className="size-5"/>} title="Privacy" desc="You control access. Provider view is limited to protocol, inventory, and calendar."/>
+            <FeatureCard icon={<Activity className="size-5"/>} title="Health Stats" desc="Track your weight and other health metrics alongside your protocol to visualize progress."/>
             <FeatureCard icon={<BarChart3 className="size-5"/>} title="Forecasting" desc="Run‑out projections that respect dosage, frequency, and on/off cycles."/>
+            <FeatureCard icon={<ShieldCheck className="size-5"/>} title="Privacy" desc="Your research data is yours. We prioritize data privacy and minimal collection."/>
           </div>
         </div>
       </section>
@@ -189,58 +198,8 @@ export default function PeptidePlannerLanding() {
           <ol className="mt-8 grid md:grid-cols-3 gap-6">
             <Step n="01" title="Set your protocol" body="Choose peptides from inventory, pick a schedule, and (optionally) define on/off cycles."/>
             <Step n="02" title="Log doses daily" body="One tap to log or skip. Cards update inventory and color state automatically."/>
-            <Step n="03" title="Never run out" body="See projected depletion dates and reorder in a couple of clicks with vendor coupons applied."/>
+            <Step n="03" title="Track progress" body="Log your weight and monitor depletion dates to ensure you never run out unexpectedly."/>
           </ol>
-        </div>
-      </section>
-
-      {/* Providers */}
-      <section id="providers" className="py-16 lg:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-10 items-center">
-            <div>
-              <h2 className="text-3xl font-semibold tracking-tight">Provider collaboration, without chaos</h2>
-              <p className="mt-3 text-[rgb(var(--pp-muted))] max-w-prose">
-                Invite trusted providers to review your live protocol and calendar.
-                <span className="ml-2 inline-flex items-center text-[10px] px-2 py-0.5 rounded-full bg-[rgba(var(--pp-accent-2),0.12)] text-[rgb(var(--pp-accent-2))]">Coming Soon</span>{" "}
-                They can propose changes as "Suggestions" — you stay in control of what actually goes live.
-              </p>
-              <ul className="mt-6 space-y-3 text-sm">
-                {[
-                  "Share by code or magic link",
-                  "Provider can draft protocol edits and inventory additions",
-                  "Accept suggestions with one click",
-                ].map((t,i)=> (
-                  <li key={i} className="flex items-start gap-3">
-                    <CheckCircle2 className="mt-0.5 size-4 text-[rgb(var(--pp-accent-1))]"/>
-                    <span className="text-[rgb(var(--pp-foreground))] dark:text-white">{t}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="relative">
-              <div className="absolute -inset-4 -z-10 bg-gradient-to-tr from-[rgba(var(--pp-accent-1),0.15)] via-[rgba(var(--pp-accent-2),0.12)] to-[rgba(var(--pp-accent-3),0.15)] rounded-3xl blur-2xl"/>
-              <div className="rounded-3xl border border-[rgb(var(--pp-border))] bg-[rgb(var(--pp-card))] p-6 shadow-xl">
-                <div className="text-sm font-medium">Suggestion Preview</div>
-                <div className="mt-3 rounded-2xl border border-[rgb(var(--pp-border))] p-4">
-                  <div className="text-sm font-medium">Add CJC/Ipamorelin</div>
-                  <div className="mt-1 text-xs text-[rgb(var(--pp-muted))]">Daily, 100/100 mcg • 6 weeks on / 2 off</div>
-                  <div className="mt-3 flex gap-2">
-                    <button className="px-3 py-2 rounded-xl text-xs text-white bg-[rgb(var(--pp-accent-1))]">Accept</button>
-                    <button className="px-3 py-2 rounded-xl text-xs border border-[rgb(var(--pp-border))]">Ask a question</button>
-                  </div>
-                </div>
-                <div className="mt-3 rounded-2xl border border-[rgb(var(--pp-border))] p-4">
-                  <div className="text-sm font-medium">Increase BPC‑157 to 300 mcg</div>
-                  <div className="mt-1 text-xs text-[rgb(var(--pp-muted))]">Weekdays only • until symptoms resolve</div>
-                  <div className="mt-3 flex gap-2">
-                    <button className="px-3 py-2 rounded-xl text-xs text-white bg-[rgb(var(--pp-accent-1))]">Accept</button>
-                    <button className="px-3 py-2 rounded-xl text-xs border border-[rgb(var(--pp-border))]">Decline</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -250,8 +209,8 @@ export default function PeptidePlannerLanding() {
           <h2 className="text-3xl font-semibold tracking-tight">FAQ</h2>
           <div className="mt-8 grid md:grid-cols-2 gap-8">
             <Faq q="Does this replace my provider?" a="No. Peptide Planner is a companion for planning, tracking, and inventory — not medical advice."/>
-            <Faq q="How do orders work?" a="You build a cart per vendor. When you checkout, we pass your selected items to the vendor site and save a draft order. Coupon or discount pricing is already applied in your cart. Order tracking is a future release."/>
             <Faq q="Can I use cycles?" a="Yes. Protocols can include X weeks on / X weeks off. Forecasting respects cycles when projecting run‑out."/>
+            <Faq q="Can I track more than peptides?" a="You can track your weight and health stats alongside your protocol usage to correlate results."/>
             <Faq q="Light & dark mode?" a="Yep — toggle in the header. Colors follow your brand variables so both themes stay on‑brand."/>
           </div>
         </div>
@@ -261,7 +220,7 @@ export default function PeptidePlannerLanding() {
       <section id="cta" className="py-16 lg:py-24">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">Start planning smarter — today</h2>
-          <p className="mt-3 text-[rgb(var(--pp-muted))]">Bring structure to your stack. Keep your color scheme. Keep your vendors. Lose the chaos.</p>
+          <p className="mt-3 text-[rgb(var(--pp-muted))]">Bring structure to your stack. Keep your color scheme. Lose the chaos.</p>
           <div className="mt-6 flex justify-center gap-3">
             <a href="https://app.peptideplanner.info" className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-medium text-white bg-gradient-to-r from-[rgb(var(--pp-accent-1))] via-[rgb(var(--pp-accent-2))] to-[rgb(var(--pp-accent-3))] shadow">
               Launch the App <LogIn className="size-4"/>
