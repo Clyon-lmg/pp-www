@@ -1,24 +1,27 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { 
-  Calendar, 
-  ClipboardList, 
-  Package, 
-  FlaskConical as Flask, 
-  Syringe, 
-  CheckCircle2, 
-  XCircle, 
-  Clock, 
-  ChevronRight, 
-  ShieldCheck, 
-  LogIn, 
-  ArrowRight, 
-  BarChart3, 
-  Activity 
+import {
+  Calendar,
+  ClipboardList,
+  Package,
+  FlaskConical as Flask,
+  Syringe,
+  CheckCircle2,
+  XCircle,
+  Clock,
+  ChevronRight,
+  ShieldCheck,
+  ArrowRight,
+  BarChart3,
+  Activity,
+  Check,
+  X,
+  Zap,
 } from "lucide-react";
 
 export default function PeptidePlannerLanding() {
   const [dark, setDark] = useState(false);
+  const [annual, setAnnual] = useState(false);
 
   useEffect(() => {
     if (dark) document.documentElement.classList.add("dark");
@@ -33,18 +36,19 @@ export default function PeptidePlannerLanding() {
       const banner = document.querySelector('[data-testid="compliance-banner"]');
       console.assert(!!banner && banner.textContent?.toLowerCase().includes("not for human consumption"), "Compliance banner missing or incorrect.");
 
-      // Verify removed elements are actually gone
       console.assert(!document.querySelector('[data-testid="feature-orders"]'), "Orders feature should be removed.");
       console.assert(!document.querySelector('[data-testid="feature-providers"]'), "Provider feature should be removed.");
       console.assert(!document.querySelector('#providers'), "Provider section should be removed.");
 
       const styles = getComputedStyle(document.documentElement);
       console.assert(styles.getPropertyValue("--pp-accent-1").trim() !== "", "Missing --pp-accent-1 token");
-
     } catch (e) {
       console.warn("Smoke tests warning:", e);
     }
   }, []);
+
+  const proMonthly = 9;
+  const proAnnual = 79;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[rgb(var(--pp-surface-1))] to-[rgb(var(--pp-surface-2))] text-[rgb(var(--pp-foreground))] dark:text-[rgb(var(--pp-foreground))]">
@@ -91,6 +95,7 @@ export default function PeptidePlannerLanding() {
           <nav className="hidden md:flex items-center gap-6 text-sm">
             <a href="#features" className="hover:opacity-80">Features</a>
             <a href="#workflow" className="hover:opacity-80">How it works</a>
+            <a href="#pricing" className="hover:opacity-80">Pricing</a>
             <a href="#faq" className="hover:opacity-80">FAQ</a>
           </nav>
 
@@ -118,24 +123,27 @@ export default function PeptidePlannerLanding() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-[rgba(var(--pp-accent-1),0.12)] text-[rgb(var(--pp-accent-1))] mb-5">
+                <Zap className="size-3.5"/> Free plan available — no credit card required
+              </div>
               <h1 className="text-4xl/tight md:text-5xl/tight font-semibold tracking-tight">
-                Your peptide journey, organized.
+                Your peptide research,<br/>finally organized.
               </h1>
               <p className="mt-4 text-base md:text-lg text-[rgb(var(--pp-muted))] max-w-prose">
-                Plan doses, track history, manage inventory, and monitor your stats — all in one companion app. Built for real protocols, cycles, and day-to-day compliance.
+                Plan doses, track history, manage inventory, and monitor your stats — all in one focused companion app. Built for real protocols, multi-peptide cycles, and day-to-day consistency.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <a href="https://app.peptideplanner.info" className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-medium text-white bg-[rgb(var(--pp-accent-1))] hover:brightness-110 shadow">
-                  Get Started Free <ChevronRight className="size-4"/>
+                  Start for Free <ChevronRight className="size-4"/>
                 </a>
-                <a href="#features" className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-medium border border-[rgb(var(--pp-border))] hover:bg-[rgb(var(--pp-card-contrast))]">
-                  See Features
+                <a href="#pricing" className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-medium border border-[rgb(var(--pp-border))] hover:bg-[rgb(var(--pp-card-contrast))]">
+                  View Pricing
                 </a>
               </div>
-              <div className="mt-6 flex items-center gap-4 text-xs text-[rgb(var(--pp-muted))]">
+              <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-[rgb(var(--pp-muted))]">
                 <div className="inline-flex items-center gap-1"><ShieldCheck className="size-4"/> Private by design</div>
                 <div className="inline-flex items-center gap-1"><Activity className="size-4"/> Progress tracking</div>
-                <div className="inline-flex items-center gap-1"><BarChart3 className="size-4"/> Run‑out forecasting</div>
+                <div className="inline-flex items-center gap-1"><BarChart3 className="size-4"/> Run-out forecasting</div>
               </div>
             </div>
 
@@ -148,7 +156,11 @@ export default function PeptidePlannerLanding() {
                   <div className="text-xs text-[rgb(var(--pp-muted))]">Sample Preview</div>
                 </div>
                 <ul className="p-5 space-y-4">
-                  {[{name:"Retatrutide", dose:"1.5 mg", units:"30 u", inv:"12 doses", status:"logged"}, {name:"BPC-157", dose:"250 mcg", units:"5 u", inv:"22 doses", status:"skipped"}, {name:"TB-500", dose:"2 mg", units:"40 u", inv:"8 doses", status:"pending"}].map((i,idx)=> (
+                  {[
+                    {name:"Retatrutide", dose:"1.5 mg", units:"30 u", inv:"12 doses", status:"logged"},
+                    {name:"BPC-157", dose:"250 mcg", units:"5 u", inv:"22 doses", status:"skipped"},
+                    {name:"TB-500", dose:"2 mg", units:"40 u", inv:"8 doses", status:"pending"},
+                  ].map((i, idx) => (
                     <li key={idx} className="rounded-xl border border-[rgb(var(--pp-border))] p-4">
                       <div className="flex items-center justify-between">
                         <div className="font-medium">{i.name}</div>
@@ -174,19 +186,50 @@ export default function PeptidePlannerLanding() {
       </section>
 
       {/* Features */}
-      <section id="features" className="py-16 lg:py-20">
+      <section id="features" className="py-16 lg:py-20 border-t border-[rgb(var(--pp-border))]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-semibold tracking-tight">Everything you need to run a real protocol</h2>
-          <p className="mt-3 text-[rgb(var(--pp-muted))] max-w-2xl">A focused suite of tools designed for speed, clarity, and consistency.</p>
+          <p className="mt-3 text-[rgb(var(--pp-muted))] max-w-2xl">A focused suite of tools designed for speed, clarity, and consistency. No bloat — just the features that matter.</p>
 
           <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <FeatureCard icon={<Syringe className="size-5"/>} title="Today" desc="Tap Log or Skip on dose cards. Auto‑decrement inventory; instant visual state (✓ / ✕)."/>
-            <FeatureCard icon={<Calendar className="size-5"/>} title="Calendar" desc="Month grid with Today jump. Past/Today reflect ✓ / ✕ states from the log."/>
-            <FeatureCard icon={<Package className="size-5"/>} title="Inventory" desc="Normalize names, compute concentration, and see run‑out dates for every vial."/>
-            <FeatureCard icon={<ClipboardList className="size-5"/>} title="Protocol" desc="Build protocol groups, schedules (ED, 5/2, custom), and cycles. One active at a time."/>
-            <FeatureCard icon={<Activity className="size-5"/>} title="Health Stats" desc="Track your weight and other health metrics alongside your protocol to visualize progress."/>
-            <FeatureCard icon={<BarChart3 className="size-5"/>} title="Forecasting" desc="Run‑out projections that respect dosage, frequency, and on/off cycles."/>
-            <FeatureCard icon={<ShieldCheck className="size-5"/>} title="Privacy" desc="Your research data is yours. We prioritize data privacy and minimal collection."/>
+            <FeatureCard
+              icon={<Syringe className="size-5"/>}
+              title="Daily Dose Logging"
+              desc="Tap to log or skip each dose. Inventory auto-decrements, and visual state updates instantly — logged, skipped, or pending at a glance."
+            />
+            <FeatureCard
+              icon={<Calendar className="size-5"/>}
+              title="Calendar View"
+              desc="See your full compliance history at a glance. Color-coded states across every day of the month, with a one-tap jump back to today."
+            />
+            <FeatureCard
+              icon={<Package className="size-5"/>}
+              title="Inventory Management"
+              desc="Normalize peptide names, compute reconstituted concentration, and see projected run-out dates for every vial in your stack."
+            />
+            <FeatureCard
+              icon={<ClipboardList className="size-5"/>}
+              title="Protocol Builder"
+              desc="Group peptides into named protocols with flexible schedules — every day, 5-on/2-off, or fully custom. Define on/off cycles and keep one protocol active at a time."
+              pro
+            />
+            <FeatureCard
+              icon={<Activity className="size-5"/>}
+              title="Health Stats"
+              desc="Log weight and key metrics alongside your protocol. Visualize how your stack correlates with measurable progress over time."
+              pro
+            />
+            <FeatureCard
+              icon={<BarChart3 className="size-5"/>}
+              title="Run-out Forecasting"
+              desc="Project when each vial runs dry — accounting for dosage, frequency, and your on/off cycle schedule — so you're never caught short."
+              pro
+            />
+            <FeatureCard
+              icon={<ShieldCheck className="size-5"/>}
+              title="Privacy First"
+              desc="Your research data stays yours. We collect only what's necessary to run the app — and will never sell or share it with anyone."
+            />
           </div>
         </div>
       </section>
@@ -195,38 +238,112 @@ export default function PeptidePlannerLanding() {
       <section id="workflow" className="py-16 lg:py-20 bg-[rgb(var(--pp-card-contrast))]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-semibold tracking-tight">Simple, reliable workflow</h2>
+          <p className="mt-3 text-[rgb(var(--pp-muted))] max-w-2xl">From setup to daily logging in minutes. No learning curve, no guesswork.</p>
           <ol className="mt-8 grid md:grid-cols-3 gap-6">
-            <Step n="01" title="Set your protocol" body="Choose peptides from inventory, pick a schedule, and (optionally) define on/off cycles."/>
-            <Step n="02" title="Log doses daily" body="One tap to log or skip. Cards update inventory and color state automatically."/>
-            <Step n="03" title="Track progress" body="Log your weight and monitor depletion dates to ensure you never run out unexpectedly."/>
+            <Step n="01" title="Set your protocol" body="Add your peptides, choose a schedule (ED, 5/2, or custom), and define on/off cycles. Takes less than two minutes to get started."/>
+            <Step n="02" title="Log doses daily" body="One tap to log or skip. Cards auto-update inventory and status — no manual calculations, no spreadsheets."/>
+            <Step n="03" title="Track your progress" body="Log weight and health metrics. Monitor depletion dates. Stay ahead of your next order, every cycle."/>
           </ol>
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section id="pricing" className="py-16 lg:py-24 border-t border-[rgb(var(--pp-border))]">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">Simple, transparent pricing</h2>
+            <p className="mt-3 text-[rgb(var(--pp-muted))]">Start free, upgrade when you&apos;re ready. No hidden fees. Cancel anytime.</p>
+
+            {/* Billing toggle */}
+            <div className="mt-6 inline-flex items-center gap-1 rounded-2xl border border-[rgb(var(--pp-border))] bg-[rgb(var(--pp-card-contrast))] p-1.5">
+              <button
+                onClick={() => setAnnual(false)}
+                className={`px-4 py-2 rounded-xl text-sm font-medium transition ${!annual ? "bg-[rgb(var(--pp-card))] shadow text-[rgb(var(--pp-foreground))]" : "text-[rgb(var(--pp-muted))]"}`}
+              >
+                Monthly
+              </button>
+              <button
+                onClick={() => setAnnual(true)}
+                className={`px-4 py-2 rounded-xl text-sm font-medium transition inline-flex items-center gap-2 ${annual ? "bg-[rgb(var(--pp-card))] shadow text-[rgb(var(--pp-foreground))]" : "text-[rgb(var(--pp-muted))]"}`}
+              >
+                Annual
+                <span className="text-xs px-1.5 py-0.5 rounded-full bg-[rgba(var(--pp-accent-1),0.15)] text-[rgb(var(--pp-accent-1))]">Save 27%</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-10 grid md:grid-cols-2 gap-6">
+            <PricingCard
+              name="Free"
+              price="$0"
+              period="forever"
+              description="The essentials to start tracking your research protocols. No credit card needed."
+              cta="Get Started Free"
+              ctaHref="https://app.peptideplanner.info"
+              features={[
+                { text: "Up to 3 peptides", included: true },
+                { text: "Daily dose logging", included: true },
+                { text: "Calendar view", included: true },
+                { text: "Basic inventory tracking", included: true },
+                { text: "Run-out forecasting", included: false },
+                { text: "Health stats & progress tracking", included: false },
+                { text: "Protocol groups & on/off cycles", included: false },
+                { text: "Data export (CSV)", included: false },
+              ]}
+            />
+            <PricingCard
+              name="Pro"
+              price={annual ? `$${(proAnnual / 12).toFixed(2)}` : `$${proMonthly}`}
+              period={annual ? "/ month, billed annually" : "/ month"}
+              description="The full toolkit for researchers running serious multi-peptide protocols."
+              cta="Start Pro Free Trial"
+              ctaHref="https://app.peptideplanner.info"
+              popular
+              features={[
+                { text: "Unlimited peptides", included: true },
+                { text: "Daily dose logging", included: true },
+                { text: "Calendar view", included: true },
+                { text: "Full inventory + concentration calculator", included: true },
+                { text: "Run-out forecasting", included: true },
+                { text: "Health stats & progress tracking", included: true },
+                { text: "Protocol groups & on/off cycles", included: true },
+                { text: "Data export (CSV)", included: true },
+              ]}
+            />
+          </div>
+
+          <p className="mt-6 text-center text-xs text-[rgb(var(--pp-muted))]">
+            Pro trial requires no payment. Switch plans or cancel from your account settings at any time.
+          </p>
         </div>
       </section>
 
       {/* FAQ */}
       <section id="faq" className="py-16 lg:py-20 border-t border-[rgb(var(--pp-border))]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-semibold tracking-tight">FAQ</h2>
+          <h2 className="text-3xl font-semibold tracking-tight">Frequently asked questions</h2>
           <div className="mt-8 grid md:grid-cols-2 gap-8">
-            <Faq q="Does this replace my provider?" a="No. Peptide Planner is a companion for planning, tracking, and inventory — not medical advice."/>
-            <Faq q="Can I use cycles?" a="Yes. Protocols can include X weeks on / X weeks off. Forecasting respects cycles when projecting run‑out."/>
-            <Faq q="Can I track more than peptides?" a="You can track your weight and health stats alongside your protocol usage to correlate results."/>
-            <Faq q="Light & dark mode?" a="Yep — toggle in the header. Colors follow your brand variables so both themes stay on‑brand."/>
+            <Faq q="What's included in the free plan?" a="The free plan includes dose logging, calendar view, and basic inventory tracking for up to 3 peptides — everything you need to get started at no cost."/>
+            <Faq q="What does Pro add?" a="Pro unlocks unlimited peptides, run-out forecasting, health stats tracking, protocol groups with on/off cycles, concentration calculators, and CSV data export. The complete toolkit for complex stacks."/>
+            <Faq q="Can I cancel anytime?" a="Yes. Pro subscriptions are month-to-month (or annual, your choice). Cancel from your account settings at any time — your data remains accessible on the free plan."/>
+            <Faq q="Does this replace my provider?" a="No. Peptide Planner is a research companion for planning, tracking, and inventory management — not a source of medical advice or a connection to peptide vendors."/>
+            <Faq q="Can I track more than peptides?" a="Yes. With the Pro plan you can log weight and health stats alongside your protocol to correlate metrics with your research timeline."/>
+            <Faq q="Is my data secure?" a="We use industry-standard security practices and collect only what's necessary to run the app. Your research data is never sold or shared with third parties."/>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section id="cta" className="py-16 lg:py-24">
+      <section id="cta" className="py-16 lg:py-24 bg-[rgb(var(--pp-card-contrast))]">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">Start planning smarter — today</h2>
-          <p className="mt-3 text-[rgb(var(--pp-muted))]">Bring structure to your stack. Keep your color scheme. Lose the chaos.</p>
-          <div className="mt-6 flex justify-center gap-3">
+          <p className="mt-3 text-[rgb(var(--pp-muted))]">Free plan, no credit card required. Upgrade to Pro when you&apos;re ready for the full toolkit.</p>
+          <div className="mt-6 flex justify-center flex-wrap gap-3">
             <a href="https://app.peptideplanner.info" className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-medium text-white bg-gradient-to-r from-[rgb(var(--pp-accent-1))] via-[rgb(var(--pp-accent-2))] to-[rgb(var(--pp-accent-3))] shadow">
-              Launch the App <LogIn className="size-4"/>
+              Get Started Free <ChevronRight className="size-4"/>
             </a>
-            <a href="#features" className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-medium border border-[rgb(var(--pp-border))]">
-              Explore Features
+            <a href="#pricing" className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-medium border border-[rgb(var(--pp-border))] hover:bg-[rgb(var(--pp-card))]">
+              View Pricing
             </a>
           </div>
         </div>
@@ -251,31 +368,86 @@ export default function PeptidePlannerLanding() {
   );
 }
 
-function FeatureCard({icon, title, desc, testId}:{icon:React.ReactNode, title:string, desc:string, testId?: string}){
+function FeatureCard({icon, title, desc, testId, pro}: {icon: React.ReactNode, title: string, desc: string, testId?: string, pro?: boolean}) {
   return (
-    <div data-testid={testId} className="rounded-2xl border border-[rgb(var(--pp-border))] bg-[rgb(var(--pp-card))] p-4 hover:shadow-sm transition group">
+    <div data-testid={testId} className="rounded-2xl border border-[rgb(var(--pp-border))] bg-[rgb(var(--pp-card))] p-4 hover:shadow-sm transition group relative">
+      {pro && (
+        <span className="absolute top-3 right-3 text-xs px-2 py-0.5 rounded-full bg-[rgba(var(--pp-accent-3),0.12)] text-[rgb(var(--pp-accent-3))] font-medium">Pro</span>
+      )}
       <div className="inline-flex size-9 items-center justify-center rounded-xl bg-[rgba(var(--pp-accent-2),0.12)] text-[rgb(var(--pp-accent-2))] group-hover:scale-105 transition">{icon}</div>
       <div className="mt-3 font-medium">{title}</div>
       <p className="mt-1 text-sm text-[rgb(var(--pp-muted))]">{desc}</p>
     </div>
-  )
+  );
 }
 
-function Step({n,title,body}:{n:string,title:string,body:string}){
+function Step({n, title, body}: {n: string, title: string, body: string}) {
   return (
     <li className="rounded-2xl border border-[rgb(var(--pp-border))] bg-[rgb(var(--pp-card))] p-6">
       <div className="text-xs font-mono text-[rgb(var(--pp-muted))]">{n}</div>
       <div className="mt-1 font-medium">{title}</div>
       <p className="mt-2 text-sm text-[rgb(var(--pp-muted))]">{body}</p>
     </li>
-  )
+  );
 }
 
-function Faq({q,a}:{q:string,a:string}){
+function Faq({q, a}: {q: string, a: string}) {
   return (
     <div className="rounded-2xl border border-[rgb(var(--pp-border))] bg-[rgb(var(--pp-card))] p-5">
       <div className="font-medium">{q}</div>
       <p className="mt-2 text-sm text-[rgb(var(--pp-muted))]">{a}</p>
     </div>
-  )
+  );
+}
+
+function PricingCard({name, price, period, description, cta, ctaHref, popular, features}: {
+  name: string;
+  price: string;
+  period: string;
+  description: string;
+  cta: string;
+  ctaHref: string;
+  popular?: boolean;
+  features: { text: string; included: boolean }[];
+}) {
+  return (
+    <div className={`relative rounded-2xl border p-6 flex flex-col ${popular ? "border-[rgb(var(--pp-accent-2))] shadow-lg bg-[rgb(var(--pp-card))]" : "border-[rgb(var(--pp-border))] bg-[rgb(var(--pp-card))]"}`}>
+      {popular && (
+        <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
+          <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold text-white bg-gradient-to-r from-[rgb(var(--pp-accent-1))] to-[rgb(var(--pp-accent-2))]">
+            <Zap className="size-3"/> Most Popular
+          </span>
+        </div>
+      )}
+      <div className="text-lg font-semibold">{name}</div>
+      <div className="mt-3 flex items-end gap-1.5">
+        <span className="text-4xl font-bold tracking-tight">{price}</span>
+        <span className="text-sm text-[rgb(var(--pp-muted))] mb-1.5">{period}</span>
+      </div>
+      <p className="mt-2 text-sm text-[rgb(var(--pp-muted))]">{description}</p>
+
+      <a
+        href={ctaHref}
+        className={`mt-6 inline-flex items-center justify-center gap-2 w-full px-5 py-3 rounded-2xl text-sm font-medium transition ${
+          popular
+            ? "text-white bg-gradient-to-r from-[rgb(var(--pp-accent-1))] via-[rgb(var(--pp-accent-2))] to-[rgb(var(--pp-accent-3))] shadow hover:shadow-md"
+            : "border border-[rgb(var(--pp-border))] hover:bg-[rgb(var(--pp-card-contrast))]"
+        }`}
+      >
+        {cta} <ChevronRight className="size-4"/>
+      </a>
+
+      <ul className="mt-6 space-y-3">
+        {features.map((f, i) => (
+          <li key={i} className="flex items-start gap-2.5 text-sm">
+            {f.included
+              ? <Check className="size-4 mt-0.5 shrink-0 text-[rgb(var(--pp-accent-1))]"/>
+              : <X className="size-4 mt-0.5 shrink-0 text-[rgb(var(--pp-muted))] opacity-40"/>
+            }
+            <span className={f.included ? "" : "text-[rgb(var(--pp-muted))]"}>{f.text}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
