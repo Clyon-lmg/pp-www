@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=390"/>
+<title>Peptide Planner — Today</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 390px; height: 844px; overflow: hidden;
+    background: #020617;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+    color: #F1F5F9;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Status Bar ── */
+  .status-bar {
+    height: 50px;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    padding: 0 24px 10px;
+    font-size: 15px; font-weight: 600;
+    color: #F1F5F9;
+  }
+  .status-icons { display: flex; align-items: center; gap: 6px; }
+
+  /* ── App Header ── */
+  .app-header {
+    height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 1px solid #1E293B;
+  }
+  .app-logo { display: flex; align-items: center; gap: 10px; }
+  .logo-icon {
+    width: 34px; height: 34px; border-radius: 10px;
+    background: linear-gradient(135deg, #0D9488, #0284C7);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .app-name { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
+  .icon-btn {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: #0F172A; border: 1px solid #334155;
+    display: flex; align-items: center; justify-content: center;
+    color: #94A3B8;
+  }
+
+  /* ── Scroll Area ── */
+  .scroll-area {
+    height: calc(844px - 50px - 56px - 82px);
+    overflow: hidden;
+    padding: 16px 20px 8px;
+  }
+
+  /* ── Date Row ── */
+  .date-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .date-text { font-size: 22px; font-weight: 700; letter-spacing: -0.4px; }
+  .badge-today {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+    color: #16A38C; background: rgba(22,163,140,0.15);
+    border: 1px solid rgba(22,163,140,0.35); border-radius: 20px;
+    padding: 3px 10px;
+  }
+  .research-notice {
+    font-size: 11px; color: rgba(239,68,68,0.75); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 4px;
+  }
+
+  /* ── Section Label ── */
+  .section-label {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase;
+    color: #475569; margin-bottom: 10px;
+  }
+
+  /* ── Protocol Card ── */
+  .card {
+    background: #0F172A;
+    border: 1px solid #1E293B;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .card-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .card-name { font-size: 16px; font-weight: 700; letter-spacing: -0.2px; }
+  .card-dose { font-size: 13px; color: #94A3B8; margin-top: 1px; }
+  .status-badge {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase;
+    padding: 5px 11px; border-radius: 20px; flex-shrink: 0;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .status-logged  { color: #16A38C; background: rgba(22,163,140,0.15); border: 1px solid rgba(22,163,140,0.3); }
+  .status-pending { color: #0EA5E9; background: rgba(14,165,233,0.15); border: 1px solid rgba(14,165,233,0.3); }
+  .status-skipped { color: #64748B; background: rgba(100,116,139,0.12); border: 1px solid rgba(100,116,139,0.25); }
+
+  .card-meta {
+    display: flex; align-items: center; gap: 10px;
+    flex-wrap: wrap;
+  }
+  .meta-chip {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 12px; color: #64748B;
+    background: #020617; border: 1px solid #1E293B; border-radius: 8px;
+    padding: 4px 9px;
+  }
+  .meta-chip svg { flex-shrink: 0; }
+  .card-time { font-size: 12px; color: #475569; margin-top: 8px; }
+  .card-time span { color: #16A38C; font-weight: 600; }
+
+  /* Pending card CTA button */
+  .cta-btn {
+    margin-top: 12px;
+    width: 100%;
+    height: 40px; border-radius: 12px;
+    background: linear-gradient(90deg, rgba(14,165,233,0.2), rgba(14,165,233,0.12));
+    border: 1px solid rgba(14,165,233,0.3);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    font-size: 14px; font-weight: 600; color: #0EA5E9;
+    cursor: pointer;
+  }
+
+  /* ── Bottom Nav ── */
+  .nav {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 82px;
+    background: #060F1E;
+    border-top: 1px solid #1E293B;
+    display: flex; justify-content: space-around; align-items: center;
+    padding-bottom: 20px;
+  }
+  .nav-item {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    font-size: 10px; font-weight: 500; color: #475569;
+    width: 60px;
+  }
+  .nav-item.active { color: #16A38C; }
+  .nav-item.active svg { stroke: #16A38C; }
+  .nav-item svg { stroke: #475569; }
+  .home-indicator {
+    position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 4px; background: rgba(255,255,255,0.25); border-radius: 2px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Status Bar -->
+<div class="status-bar">
+  <span>9:41</span>
+  <div class="status-icons">
+    <!-- Signal -->
+    <svg width="16" height="12" viewBox="0 0 16 12" fill="white">
+      <rect x="0"  y="8"  width="3" height="4" rx="0.5"/>
+      <rect x="4"  y="5"  width="3" height="7" rx="0.5"/>
+      <rect x="8"  y="2"  width="3" height="10" rx="0.5"/>
+      <rect x="12" y="0"  width="3" height="12" rx="0.5"/>
+    </svg>
+    <!-- Wifi -->
+    <svg width="16" height="12" viewBox="0 0 24 18" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round">
+      <path d="M1 6 C5.5 1 18.5 1 23 6"/>
+      <path d="M5 10.5 C7.5 7.5 16.5 7.5 19 10.5"/>
+      <path d="M9 15 C10.2 13.5 13.8 13.5 15 15"/>
+      <circle cx="12" cy="18" r="1.2" fill="white" stroke="none"/>
+    </svg>
+    <!-- Battery -->
+    <svg width="25" height="12" viewBox="0 0 25 12" fill="none">
+      <rect x="0" y="1" width="22" height="10" rx="2.5" stroke="white" stroke-width="1.5"/>
+      <rect x="1.5" y="2.5" width="18" height="7" rx="1.5" fill="white"/>
+      <path d="M23 4v4" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </div>
+</div>
+
+<!-- App Header -->
+<div class="app-header">
+  <div class="app-logo">
+    <div class="logo-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/>
+        <path d="M8.5 2h7"/><path d="M7 16h10"/>
+      </svg>
+    </div>
+    <span class="app-name">Peptide Planner</span>
+  </div>
+  <div class="icon-btn">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+    </svg>
+  </div>
+</div>
+
+<!-- Scroll Area -->
+<div class="scroll-area">
+
+  <!-- Date header -->
+  <div class="date-row">
+    <span class="date-text">Monday, March 9</span>
+    <span class="badge-today">Today</span>
+  </div>
+  <div class="research-notice">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(239,68,68,0.75)" stroke-width="2.5" stroke-linecap="round">
+      <path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/>
+      <path d="M8.5 2h7"/>
+    </svg>
+    Research use only — not for human consumption
+  </div>
+
+  <div class="section-label">Today's Protocol</div>
+
+  <!-- Card 1: BPC-157 — LOGGED -->
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-name">BPC-157</div>
+        <div class="card-dose">250 mcg · 50 syringe units</div>
+      </div>
+      <div class="status-badge status-logged">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Logged
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="meta-chip">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        9:30 AM
+      </div>
+      <div class="meta-chip">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg>
+        Abdomen · Left
+      </div>
+      <div class="meta-chip">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-8 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>
+        2 vials left
+      </div>
+    </div>
+    <div class="card-time"><span>✓ Logged at 9:30 AM</span> · Abdominal subcutaneous</div>
+  </div>
+
+  <!-- Card 2: Retatrutide — PENDING -->
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-name">Retatrutide</div>
+        <div class="card-dose">2 mg · 80 syringe units</div>
+      </div>
+      <div class="status-badge status-pending">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+        Pending
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="meta-chip">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        Due now
+      </div>
+      <div class="meta-chip">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg>
+        Thigh · Right
+      </div>
+    </div>
+    <div class="cta-btn">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/><path d="M8.5 2h7"/></svg>
+      Log This Dose
+    </div>
+  </div>
+
+  <!-- Card 3: TB-500 — SKIPPED -->
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-name">TB-500</div>
+        <div class="card-dose">500 mcg · rest day</div>
+      </div>
+      <div class="status-badge status-skipped">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        Skipped
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="meta-chip">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Off day (Mon/Thu)
+      </div>
+      <div class="meta-chip">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2.5" stroke-linecap="round"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-8 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>
+        1 vial — LOW
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bottom Nav -->
+<div class="nav">
+  <div class="nav-item active">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+    </svg>
+    Today
+  </div>
+  <div class="nav-item">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+      <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+      <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+    </svg>
+    Calendar
+  </div>
+  <div class="nav-item">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+    </svg>
+    Chart
+  </div>
+  <div class="nav-item">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+      <polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
+    </svg>
+    Stock
+  </div>
+  <div class="nav-item">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+      <path d="M3 6h18M3 12h18M3 18h18"/>
+    </svg>
+    More
+  </div>
+  <div class="home-indicator"></div>
+</div>
+
+</body>
+</html>

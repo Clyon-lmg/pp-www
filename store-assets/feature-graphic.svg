@@ -1,0 +1,193 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="500" viewBox="0 0 1024 500">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#020617"/>
+      <stop offset="50%"  stop-color="#0A1628"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+
+    <!-- Icon background gradient (teal → sky blue) -->
+    <linearGradient id="icon-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#0D9488"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+
+    <!-- Icon shine -->
+    <radialGradient id="icon-shine" cx="28%" cy="22%" r="58%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+
+    <!-- Liquid fill -->
+    <linearGradient id="liq" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="rgba(255,255,255,0.2)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.45)"/>
+    </linearGradient>
+
+    <!-- Teal glow for abstract curves -->
+    <filter id="curve-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Clip to canvas -->
+    <clipPath id="canvas">
+      <rect width="1024" height="500"/>
+    </clipPath>
+  </defs>
+
+  <!-- ── Background ── -->
+  <rect width="1024" height="500" fill="url(#bg)"/>
+
+  <!-- Subtle dot grid texture -->
+  <g clip-path="url(#canvas)" opacity="0.06">
+    <g fill="white">
+      <!-- Row of dots repeated across canvas -->
+      <g id="dot-row">
+        <circle r="1.2" cx="40"  cy="0"/><circle r="1.2" cx="80"  cy="0"/>
+        <circle r="1.2" cx="120" cy="0"/><circle r="1.2" cx="160" cy="0"/>
+        <circle r="1.2" cx="200" cy="0"/><circle r="1.2" cx="240" cy="0"/>
+        <circle r="1.2" cx="280" cy="0"/><circle r="1.2" cx="320" cy="0"/>
+        <circle r="1.2" cx="360" cy="0"/><circle r="1.2" cx="400" cy="0"/>
+        <circle r="1.2" cx="440" cy="0"/><circle r="1.2" cx="480" cy="0"/>
+        <circle r="1.2" cx="520" cy="0"/><circle r="1.2" cx="560" cy="0"/>
+        <circle r="1.2" cx="600" cy="0"/><circle r="1.2" cx="640" cy="0"/>
+        <circle r="1.2" cx="680" cy="0"/><circle r="1.2" cx="720" cy="0"/>
+        <circle r="1.2" cx="760" cy="0"/><circle r="1.2" cx="800" cy="0"/>
+        <circle r="1.2" cx="840" cy="0"/><circle r="1.2" cx="880" cy="0"/>
+        <circle r="1.2" cx="920" cy="0"/><circle r="1.2" cx="960" cy="0"/>
+        <circle r="1.2" cx="1000" cy="0"/>
+      </g>
+      <use href="#dot-row" transform="translate(0,40)"/>
+      <use href="#dot-row" transform="translate(0,80)"/>
+      <use href="#dot-row" transform="translate(0,120)"/>
+      <use href="#dot-row" transform="translate(0,160)"/>
+      <use href="#dot-row" transform="translate(0,200)"/>
+      <use href="#dot-row" transform="translate(0,240)"/>
+      <use href="#dot-row" transform="translate(0,280)"/>
+      <use href="#dot-row" transform="translate(0,320)"/>
+      <use href="#dot-row" transform="translate(0,360)"/>
+      <use href="#dot-row" transform="translate(0,400)"/>
+      <use href="#dot-row" transform="translate(0,440)"/>
+      <use href="#dot-row" transform="translate(0,480)"/>
+    </g>
+  </g>
+
+  <!-- Abstract serum-level curves (background decoration, right side) -->
+  <g clip-path="url(#canvas)" filter="url(#curve-glow)">
+    <!-- Teal curve — fast oscillating (BPC-157 style) -->
+    <path d="M500,340 C520,260 540,340 560,340 C580,260 600,340 620,340
+             C640,260 660,340 680,340 C700,260 720,340 740,340
+             C760,260 780,340 800,340 C820,260 840,340 860,340
+             C880,260 900,340 920,340 C940,260 960,340 980,340 C1000,260 1020,340 1040,340"
+          stroke="#16A38C" stroke-width="2" fill="none" opacity="0.18"/>
+
+    <!-- Blue curve — medium oscillation (TB-500 style) -->
+    <path d="M500,360 C560,295 620,360 680,360 C740,295 800,360 860,360
+             C920,295 980,360 1040,360"
+          stroke="#0EA5E9" stroke-width="2" fill="none" opacity="0.18"/>
+
+    <!-- Magenta curve — slow gradual (Retatrutide style) -->
+    <path d="M500,320 C600,290 700,315 800,300 C900,285 1000,310 1100,295"
+          stroke="#D946EF" stroke-width="2" fill="none" opacity="0.18"/>
+
+    <!-- Teal curve area fill (very subtle) -->
+    <path d="M500,340 C520,260 540,340 560,340 C580,260 600,340 620,340
+             C640,260 660,340 680,340 C700,260 720,340 740,340
+             C760,260 780,340 800,340 C820,260 840,340 860,340
+             C880,260 900,340 920,340 C940,260 960,340 980,340 C1000,260 1020,340 1040,340
+             L1040,500 L500,500 Z"
+          fill="#16A38C" opacity="0.04"/>
+  </g>
+
+  <!-- Left side glow accent -->
+  <ellipse cx="200" cy="250" rx="280" ry="200" fill="rgba(22,163,140,0.06)"/>
+
+  <!-- ── App Icon (left side, centered vertically) ── -->
+  <!-- Icon rounded square container: 220x220 centered at (200, 250) → top-left (90, 140) -->
+  <rect x="90" y="140" width="220" height="220" rx="45" fill="url(#icon-bg)"/>
+  <rect x="90" y="140" width="220" height="220" rx="45" fill="url(#icon-shine)"/>
+
+  <!-- Flask icon inside the 220x220 container, scale=9.17 (220/24), translate(90,140) -->
+  <g transform="translate(90,140) scale(9.167)">
+    <!-- Liquid fill -->
+    <path d="M7 16 L4.72 20.55 a1 1 0 0 0 .9 1.45 h12.76 a1 1 0 0 0 .9-1.45 L19.28 20.55 L17 16 Z"
+          fill="url(#liq)"/>
+    <!-- Flask outline -->
+    <path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"
+          stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M8.5 2h7"    stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M7 16h10"   stroke="rgba(255,255,255,0.65)" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+    <!-- Bubbles -->
+    <circle cx="9.8"  cy="18.6" r="0.6"  fill="rgba(255,255,255,0.5)"/>
+    <circle cx="13.6" cy="19.7" r="0.45" fill="rgba(255,255,255,0.4)"/>
+    <circle cx="15.8" cy="18.2" r="0.35" fill="rgba(255,255,255,0.38)"/>
+  </g>
+
+  <!-- ── Text Content (right of icon) ── -->
+  <!-- App name -->
+  <text x="372" y="218"
+        font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif"
+        font-size="64" font-weight="700" letter-spacing="-1.5"
+        fill="white">Peptide Planner</text>
+
+  <!-- Tagline (primary) -->
+  <text x="374" y="270"
+        font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif"
+        font-size="26" font-weight="500" letter-spacing="0.5"
+        fill="#16A38C">Plan · Track · Optimize</text>
+
+  <!-- Tagline (secondary) -->
+  <text x="374" y="316"
+        font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif"
+        font-size="20" font-weight="400"
+        fill="#94A3B8">Your peptide research, finally organized.</text>
+
+  <!-- Feature pills row -->
+  <!-- Protocol Builder pill -->
+  <rect x="374" y="348" width="168" height="34" rx="17" fill="rgba(22,163,140,0.15)" stroke="rgba(22,163,140,0.4)" stroke-width="1"/>
+  <text x="458" y="370" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="13" font-weight="500" fill="#16A38C">Protocol Builder</text>
+
+  <!-- Serum Modeling pill -->
+  <rect x="552" y="348" width="168" height="34" rx="17" fill="rgba(14,165,233,0.15)" stroke="rgba(14,165,233,0.4)" stroke-width="1"/>
+  <text x="636" y="370" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="13" font-weight="500" fill="#0EA5E9">Serum Modeling</text>
+
+  <!-- Inventory pill -->
+  <rect x="730" y="348" width="130" height="34" rx="17" fill="rgba(217,70,239,0.12)" stroke="rgba(217,70,239,0.35)" stroke-width="1"/>
+  <text x="795" y="370" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="13" font-weight="500" fill="#D946EF">Inventory</text>
+
+  <!-- Privacy pill -->
+  <rect x="870" y="348" width="120" height="34" rx="17" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+  <text x="930" y="370" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="13" font-weight="500" fill="#94A3B8">Private</text>
+
+  <!-- Price / trial badge -->
+  <rect x="374" y="400" width="278" height="42" rx="21" fill="rgba(22,163,140,0.2)" stroke="#16A38C" stroke-width="1.5"/>
+  <!-- Zap icon (simplified lightning bolt) at x=392, y=415 -->
+  <polyline points="400,413 396,422 401,422 397,431 405,420 400,420 404,413"
+            fill="#16A38C" stroke="none"/>
+  <text x="412" y="426"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="15" font-weight="600" fill="white">$3.99/month — 30-day free trial</text>
+
+  <!-- Research use only notice (bottom left) -->
+  <text x="90" y="475"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="12" font-weight="400" fill="rgba(239,68,68,0.7)">
+    ⚗ Research use only — peptides are not for human consumption
+  </text>
+
+  <!-- Right decorative accent circles -->
+  <circle cx="980" cy="80"  r="60" fill="rgba(14,165,233,0.05)" stroke="rgba(14,165,233,0.12)" stroke-width="1"/>
+  <circle cx="980" cy="80"  r="38" fill="rgba(14,165,233,0.05)" stroke="rgba(14,165,233,0.1)"  stroke-width="1"/>
+  <circle cx="950" cy="430" r="45" fill="rgba(217,70,239,0.04)" stroke="rgba(217,70,239,0.1)"  stroke-width="1"/>
+
+</svg>

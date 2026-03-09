@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D9488"/>
+      <stop offset="60%" stop-color="#16A38C"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+    <linearGradient id="liq" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.22)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.48)"/>
+    </linearGradient>
+    <radialGradient id="shine" cx="28%" cy="22%" r="58%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background rounded square -->
+  <rect width="512" height="512" rx="96" ry="96" fill="url(#bg)"/>
+  <!-- Shine overlay -->
+  <rect width="512" height="512" rx="96" ry="96" fill="url(#shine)"/>
+
+  <!--
+    Flask icon: Lucide flask-conical (viewBox 0 0 24 24)
+    Scale: 11.667x  →  24 * 11.667 = 280px coverage
+    Translate: (116, 116) centers the 280px span in 512px
+    Flask path center: (x=12, y=12) * 11.667 + 116 = (256, 256) ✓
+  -->
+  <g transform="translate(116,116) scale(11.667)">
+
+    <!-- Liquid fill in lower flask body (trapezoid approximating flask bottom) -->
+    <path d="M7 16 L4.72 20.55 a1 1 0 0 0 .9 1.45 h12.76 a1 1 0 0 0 .9-1.45 L19.28 20.55 L17 16 Z"
+          fill="url(#liq)"/>
+
+    <!-- Flask main outline (Lucide flask-conical path 1) -->
+    <path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"
+          stroke="white" stroke-width="1.4" fill="none"
+          stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Flask neck top bar (Lucide flask-conical path 2) -->
+    <path d="M8.5 2h7"
+          stroke="white" stroke-width="1.4" fill="none"
+          stroke-linecap="round"/>
+
+    <!-- Liquid level line (Lucide flask-conical path 3) -->
+    <path d="M7 16h10"
+          stroke="rgba(255,255,255,0.65)" stroke-width="0.75" fill="none"
+          stroke-linecap="round"/>
+
+    <!-- Bubbles inside liquid -->
+    <circle cx="9.8"  cy="18.6" r="0.55" fill="rgba(255,255,255,0.52)"/>
+    <circle cx="13.6" cy="19.7" r="0.42" fill="rgba(255,255,255,0.42)"/>
+    <circle cx="15.8" cy="18.2" r="0.32" fill="rgba(255,255,255,0.38)"/>
+    <circle cx="11.5" cy="20.3" r="0.28" fill="rgba(255,255,255,0.35)"/>
+
+  </g>
+
+  <!-- Decorative sparkle dots (outside the flask, on the background) -->
+  <circle cx="358" cy="118" r="5.5" fill="rgba(255,255,255,0.32)"/>
+  <circle cx="390" cy="152" r="3.2" fill="rgba(255,255,255,0.22)"/>
+  <circle cx="415" cy="130" r="2"   fill="rgba(255,255,255,0.18)"/>
+  <circle cx="148" cy="388" r="4.5" fill="rgba(255,255,255,0.28)"/>
+  <circle cx="164" cy="368" r="2.8" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="136" cy="366" r="1.8" fill="rgba(255,255,255,0.16)"/>
+
+</svg>
