@@ -332,9 +332,8 @@ export default function PeptidePlannerLanding() {
             © {new Date().getFullYear()} Peptide Planner. All rights reserved.
           </div>
           <div className="flex items-center gap-4 text-[rgb(var(--pp-muted))]">
-            <a href="#" className="hover:opacity-80">Privacy</a>
-            <a href="#" className="hover:opacity-80">Terms</a>
-            <a href="#" className="hover:opacity-80">Contact</a>
+            <a href="/privacy" className="hover:opacity-80">Privacy</a>
+            <a href="mailto:peptideplanner@outlook.com" className="hover:opacity-80">Contact</a>
           </div>
         </div>
       </footer>
